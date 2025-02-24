@@ -21,7 +21,7 @@ As of now, a package file is available only for Debian-based distros (Debian, Ub
 
 - Download the latest `.deb` package by running this command:
   ```sh
-  wget https://github.com/noinoiexists/Bit-Flip-Cipher/releases/download/v1.0.0/bflip_1.0.0_amd64.deb
+  wget https://github.com/noinoiexists/Bit-Flip-Cipher/releases/download/bflip-v1.0.0/bflip_1.0.0_amd64.deb
   ```
 - Install it using your package manager (`apt`):
    ```sh
@@ -37,15 +37,15 @@ If you wish to install another version instead, you can download the respective 
 - Run the following commands:
 
 ```sh
-wget https://github.com/noinoiexists/Bit-Flip-Cipher/archive/refs/heads/main.zip
-unzip main.zip
-cd Bit-Flip-Cipher-main
+wget https://github.com/noinoiexists/Bit-Flip-Cipher/archive/refs/tags/bflip-v1.0.0.tar.gz
+tar -xvzf ./bflip-v1.0.0.tar.gz
+cd Bit-Flip-Cipher-bflip-v1.0.0/
 make
 sudo make install
 ```
 
 This will compile the binary and install it in `/usr/local/bin/`. It can be run as `bflip`.  
-If you wish to install another version instead, you can download the respective `.zip` file from the [Releases](https://github.com/noinoiexists/Bit-Flip-Cipher/releases) page.
+If you wish to install another version instead, you can download the respective `.tar.gz` file from the [Releases](https://github.com/noinoiexists/Bit-Flip-Cipher/releases) page.
 
 ## Usage
 
