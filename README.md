@@ -27,25 +27,28 @@ As of now, a package file is available only for Debian-based distros (Debian, Ub
    ```sh
    sudo apt install ./bflip_1.0.0_amd64.deb
    ```
-The tool is now installed and can be run as `bflip`.  
-If you wish to install another version instead, you can download the respective `.deb` file from the [Releases](https://github.com/noinoiexists/Bit-Flip-Cipher/releases) page.
+The tool is now installed and can be run as `bflip`.   
 
 ### Method 2: Compile from Source
 
 **Requirements**:  `gcc`,  `make`,  `libssl-dev`
 - Install the required tools and libraries using your package manager.
-- Run the following commands:
-
-```sh
-wget https://github.com/noinoiexists/Bit-Flip-Cipher/archive/refs/tags/bflip-v1.0.0.tar.gz
-tar -xvzf ./bflip-v1.0.0.tar.gz
-cd Bit-Flip-Cipher-bflip-v1.0.0/
-make
-sudo make install
-```
+- Download the latest source code archive by running this command:
+  ```sh
+  wget https://github.com/noinoiexists/Bit-Flip-Cipher/archive/refs/tags/bflip-v1.0.0.tar.gz
+  ```
+- Extract, compile and install the code:
+  ```sh
+  tar -xvzf ./bflip-v1.0.0.tar.gz
+  cd Bit-Flip-Cipher-bflip-v1.0.0/
+  make
+  sudo make install
+  ```
 
 This will compile the binary and install it in `/usr/local/bin/`. It can be run as `bflip`.  
-If you wish to install another version instead, you can download the respective `.tar.gz` file from the [Releases](https://github.com/noinoiexists/Bit-Flip-Cipher/releases) page.
+
+---
+**Note**: If you wish to install a different version instead, replace the version numbers (vX.Y.Z) in the above steps with the one you want **or** you can find the respective files in the [Releases](https://github.com/noinoiexists/Bit-Flip-Cipher/releases) page.
 
 ## Usage
 
