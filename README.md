@@ -44,7 +44,8 @@ make
 sudo make install
 ```
 
-This will compile the binary and install it in `/usr/local/bin/`. It can be run as `bflip`.
+This will compile the binary and install it in `/usr/local/bin/`. It can be run as `bflip`.  
+If you wish to install another version instead, you can download the respective `.zip` file from the [Releases](https://github.com/noinoiexists/Bit-Flip-Cipher/releases) page.
 
 ## Usage
 
