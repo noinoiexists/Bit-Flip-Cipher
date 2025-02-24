@@ -19,7 +19,7 @@ As of now, a package file is available only for Debian-based distros (Debian, Ub
 
 ### Method 1: Install via Debian Package ( `amd64` )
 
-- Download the latest `.deb` package from the Releases page.
+- Download the latest `.deb` package by clicking [here](https://github.com/noinoiexists/Bit-Flip-Cipher/releases/download/v1.0.0/bflip_1.0.0_amd64.deb) **or** from the [Releases](https://github.com/noinoiexists/Bit-Flip-Cipher/releases) page.
 - Install it using your package manager (`apt`):
    ```sh
    sudo apt install bflip_1.0.0_amd64.deb
