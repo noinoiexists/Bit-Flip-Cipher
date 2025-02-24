@@ -47,10 +47,10 @@ This will compile the binary and install it in `/usr/local/bin/`. It can be run 
 
 `bflip -k <key> [text]`
 
-Examples:
- `bflip -k secretkey 'hello world'`
- `bflip -k 'multi-word secretkey' 'hello world'` 
-  `printf 'hello world' | bflip -k secretkey`
+Examples:  
+ `bflip -k secretkey 'hello world'`  
+ `bflip -k 'multi-word secretkey' 'hello world'`   
+  `printf 'hello world' | bflip -k secretkey`  
 
 ```
 Options:
