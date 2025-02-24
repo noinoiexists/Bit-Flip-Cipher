@@ -1,84 +1,67 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+#include <limits.h>
+#include <openssl/sha.h>
 
 #define BITS 8  
 #define VERSION "1.0.0"
+#define MAX_INPUT_SIZE 4096
+#define MAX_KEY_LENGTH 256
 
 unsigned int generateRandom(unsigned int *seed) {
     *seed = (1664525 * (*seed) + 1013904223) % 4294967296;
     return *seed;
 }
 
-void stringToBinary(const char *input, char binary[][BITS + 1], size_t length) {
-    for (size_t i = 0; i < length; i++) {
-        unsigned char c = input[i];
-        for (int j = BITS - 1; j >= 0; j--) {
-            binary[i][j] = (c & 1) + '0';
-            c >>= 1;
-        }
-        binary[i][BITS] = '\0';  
+void hashKey(const char *keyStr, unsigned char *hash) {
+    if (keyStr == NULL || strlen(keyStr) == 0) {
+        fprintf(stderr, "Error: Key cannot be empty.\n");
+        exit(1);
     }
+    SHA256((unsigned char *)keyStr, strlen(keyStr), hash);
 }
 
-void binaryToString(const char binary[][BITS + 1], char *output, size_t length) {
+void encryptDecrypt(const char *input, char *output, unsigned char *keyHash) {
+    size_t length = strlen(input);
     for (size_t i = 0; i < length; i++) {
-        unsigned char c = 0;
-        for (int j = 0; j < BITS; j++) {
-            c = (c << 1) | (binary[i][j] - '0');
-        }
-        output[i] = c;
+        output[i] = input[i] ^ keyHash[i % SHA256_DIGEST_LENGTH];
     }
     output[length] = '\0';
 }
 
-void flipBits(char binary[][BITS + 1], size_t length, unsigned int key) {
-    unsigned int seed = key;
-    for (size_t i = 0; i < length; i++) {
-        unsigned int pos = (generateRandom(&seed) % 4) + 1;
-        pos = BITS - pos;  
-        binary[i][pos] = (binary[i][pos] == '0') ? '1' : '0';
-    }
-}
-
-void encryptDecrypt(const char *input, char *output, unsigned int key) {
-    size_t length = strlen(input);
-    char binary[length][BITS + 1];
-    
-    stringToBinary(input, binary, length);
-    flipBits(binary, length, key);
-    binaryToString(binary, output, length);
-}
-
 void trimNewline(char *str) {
     size_t len = strlen(str);
-    if (len > 0 && str[len - 1] == '\n') {
-        str[len - 1] = '\0';
+    while (len > 0 && (str[len - 1] == '\n' || str[len - 1] == '\r')) {
+        str[--len] = '\0';
     }
 }
 
 void printHelp() {
-    printf("Bit Flip Cipher (v%s)\n",VERSION);
+    printf("Bit Flip Cipher (v%s)\n", VERSION);
     printf("\n");
-    printf("Usage: blip -k <key> [text]\n");
-    printf("Description: This tool encrypts text using an integer key by flipping pseudo-random bits in the binary representation of the text.\n");
+    printf("Usage: bflip -k <key> [text]\n");
+    printf("\n");
+    printf("Description: This tool encrypts text using a key-derived SHA-256 hash with XOR bit flipping. As a symmetric cipher, decryption can be performed by reapplying this tool with the same key.\n");
+    printf("\n");
     printf("Examples:\n");
-    printf("  bflip -k 12345 'hello world'\n");
-    printf("  printf 'hello world' | bflip -k 12345\n");
+    printf("  bflip -k secretkey 'hello world'\n");
+    printf("  bflip -k 'multi-word secretkey' 'hello world'\n");
+    printf("  printf 'hello world' | bflip -k secretkey\n");
     printf("\n");
     printf("Options:\n");
-    printf("  -k <key>      Specify the encryption/decryption key (integer).\n");
+    printf("  -k <key>      Specify the encryption/decryption key (string).\n");
     printf("  -h, --help    Display this help menu.\n");
     printf("  -v, --version Display the version information.\n");
     printf("\n");
     printf("Credits:\n");
-    printf("  This tool was created by noinoiexists.\n  Github: https://github.com/noinoiexists/\n");
+    printf("  This tool was created by noinoiexists.\n  Source: https://github.com/noinoiexists/Bit-Flip-Cipher\n");
 }
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
-        fprintf(stderr, "Bit Flip Cipher (v%s)\n",VERSION);
-        fprintf(stderr, "Try 'bflip --help' for more information.\n");
+        fprintf(stderr, "Bit Flip Cipher (v%s)\nTry 'bflip --help' for more information.\nOr visit https://github.com/noinoiexists/Bit-Flip-Cipher\n", VERSION);
         return 1;
     }
     
@@ -88,34 +71,42 @@ int main(int argc, char *argv[]) {
     }
     
     if (strcmp(argv[1], "-v") == 0 || strcmp(argv[1], "--version") == 0) {
-        printf("Bit Flip Cipher\nVersion: %s\n", VERSION);
+        printf("Bit Flip Cipher\nVersion: %s\n(https://github.com/noinoiexists/Bit-Flip-Cipher)\n", VERSION);
         return 0;
     }
     
     if (argc < 3 || strcmp(argv[1], "-k") != 0) {
-        fprintf(stderr, "Usage: bflip -k <key> [text]\n");
+        fprintf(stderr, "Usage: bflip -k <key> [text]\nTry 'bflip --help' for more information\n");
         return 1;
     }
     
-    unsigned int key = atoi(argv[2]);
-    char input[4096];
+    if (strlen(argv[2]) > MAX_KEY_LENGTH) {
+        fprintf(stderr, "Error: Key is too long. Maximum allowed length is %d characters.\n", MAX_KEY_LENGTH);
+        return 1;
+    }
     
+    unsigned char keyHash[SHA256_DIGEST_LENGTH];
+    hashKey(argv[2], keyHash);
+    
+    char input[MAX_INPUT_SIZE];
     if (argc == 4) {  
+        if (strlen(argv[3]) >= MAX_INPUT_SIZE) {
+            fprintf(stderr, "Error: Input text is too large. Maximum allowed size is %d characters.\n", MAX_INPUT_SIZE - 1);
+            return 1;
+        }
         strncpy(input, argv[3], sizeof(input) - 1);
         input[sizeof(input) - 1] = '\0';
     } else {  
-        size_t length = fread(input, 1, sizeof(input) - 1, stdin);
-        if (length == 0) {
+        if (fgets(input, sizeof(input), stdin) == NULL) {
             fprintf(stderr, "Error: No input provided.\n");
             return 1;
         }
-        input[length] = '\0';
         trimNewline(input);
     }
     
-    char output[4096];
-    encryptDecrypt(input, output, key);
+    char output[MAX_INPUT_SIZE];
+    encryptDecrypt(input, output, keyHash);
     
-    printf("%s", output);
+    printf("%s\n", output);
     return 0;
 }
