@@ -94,10 +94,12 @@ int main(int argc, char *argv[]) {
     
     int decryptMode = 0;
     int keyIndex = -1;
+    int dIndex = -1;
     
     for (int i = 1; i < argc; i++) {
         if (strcmp(argv[i], "-d") == 0) {
             decryptMode = 1;
+            dIndex = i;
         } else if (strcmp(argv[i], "-k") == 0 && i + 1 < argc) {
             keyIndex = i;
         }
@@ -105,6 +107,11 @@ int main(int argc, char *argv[]) {
     
     if (keyIndex == -1) {
         fprintf(stderr, "Usage: bflip -k <key> [text] | bflip -d -k <key> [base64_text]\nTry 'bflip --help' for more information\n");
+        return 1;
+    }
+    
+    if (dIndex > keyIndex + 1) {
+        fprintf(stderr, "Error: The -d flag cannot be placed between the key and the input text.\n");
         return 1;
     }
     
