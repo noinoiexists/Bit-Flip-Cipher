@@ -67,20 +67,23 @@ unsigned char *base64Decode(const char *input, int *length) {
 void printHelp() {
     printf("Bit Flip Cipher (v%s)\n", VERSION);
     printf("\n");
-    printf("Usage: bflip -k <key> [text] | bflip -d -k <key> [base64_text]\n");
+    printf("Usage:\n");
+    printf("  Encrypt: bflip -k <key> [text]\n");
+    printf("  Decrypt: bflip -d -k <key> [base64_text]\n");
     printf("\n");
-    printf("Description: This tool encrypts text using a key-derived SHA-256 hash with XOR bit flipping. Output is Base64 encoded to ensure compatibility. Use -d to decrypt Base64-encoded input.\n");
+    printf("Description: This tool encrypts text using a key-derived SHA-256 hash with XOR bit flipping. Output is Base64 encoded to ensure compatibility. You can decrypt using the -d flag by providing the Base64 encoded text.\n");
+    printf("\n");
+    printf("Options:\n");
+    printf("  -k  <key>     Specify the encryption/decryption key (string).\n");
+    printf("  -d            Decrypt bflip encrypted text (Base64 string).\n");
+    printf("  -h, --help    Display this help menu.\n");
+    printf("  -v, --version Display the version information.\n");
     printf("\n");
     printf("Examples:\n");
     printf("  bflip -k secretkey 'hello world'\n");
-    printf("  echo 'hello world' | bflip -k secretkey\n");
+    printf("  bflip -k 'multi-word secretkey' 'hello world'\n");
+    printf("  echo -n 'hello world' | bflip -k secretkey\n");
     printf("  bflip -d -k secretkey 'BASE64_ENCODED_TEXT'\n");
-    printf("\n");
-    printf("Options:\n");
-    printf("  -k <key>      Specify the encryption/decryption key (string).\n");
-    printf("  -d            Decrypt Base64 input.\n");
-    printf("  -h, --help    Display this help menu.\n");
-    printf("  -v, --version Display the version information.\n");
     printf("\n");
     printf("Credits:\n");
     printf("  This tool was created by noinoiexists.\n  Source: https://github.com/noinoiexists/Bit-Flip-Cipher\n");
@@ -90,6 +93,16 @@ int main(int argc, char *argv[]) {
     if (argc < 2) {
         fprintf(stderr, "Bit Flip Cipher (v%s)\nTry 'bflip --help' for more information.\nOr visit https://github.com/noinoiexists/Bit-Flip-Cipher\n", VERSION);
         return 1;
+    }
+
+    if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0) {
+        printHelp();
+        return 0;
+    }
+    
+    if (strcmp(argv[1], "-v") == 0 || strcmp(argv[1], "--version") == 0) {
+        printf("Bit Flip Cipher\nVersion: %s\n(https://github.com/noinoiexists/Bit-Flip-Cipher)\n", VERSION);
+        return 0;
     }
     
     int decryptMode = 0;
@@ -106,12 +119,12 @@ int main(int argc, char *argv[]) {
     }
     
     if (keyIndex == -1) {
-        fprintf(stderr, "Usage: bflip -k <key> [text] | bflip -d -k <key> [base64_text]\nTry 'bflip --help' for more information\n");
+        fprintf(stderr, "Error: Invalid Usage.\nTry 'bflip --help' for more information.\n");
         return 1;
     }
     
     if (dIndex > keyIndex + 1) {
-        fprintf(stderr, "Error: The -d flag cannot be placed between the key and the input text.\n");
+        fprintf(stderr, "Error: Invalid Usage.\nTry 'bflip --help' for more information.\n");
         return 1;
     }
     
