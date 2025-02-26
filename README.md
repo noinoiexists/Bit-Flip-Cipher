@@ -23,9 +23,9 @@ This tool was created as a fun project for me to learn more about C and Linux.
 
 ## Installation
 
-As of now, a package file is available only for Debian-based distros (Debian, Ubuntu, Mint, Kali, etc) running on amd64/x86_64 systems and can be installed using **Method 1**. For other systems, you can follow **Method 2**.
+As of now, a package file is available only for Debian-based distros (Debian, Ubuntu, Mint, Kali, etc) and can be installed using **Method 1**. For others, you can follow **Method 2**.
 
-### Method 1: Install via Debian Package ( `amd64` )
+### Method 1: Install via Debian Package
 
 - Download the latest `.deb` package by running this command:
   ```sh
@@ -35,7 +35,8 @@ As of now, a package file is available only for Debian-based distros (Debian, Ub
    ```sh
    sudo apt install ./bflip_1.1.0_amd64.deb && rm ./bflip_1.1.0_amd64.deb
    ```
-The tool is now installed and can be run as `bflip`.   
+The tool is now installed and can be run as `bflip`.  
+**Note**: For ARM devices (Mac, Raspberry Pi, Mobile, etc), use the [arm64 package](https://github.com/noinoiexists/Bit-Flip-Cipher/releases/download/bflip-v1.1.0/bflip_1.1.0_arm64.deb) instead.
 
 ### Method 2: Compile from Source
 
