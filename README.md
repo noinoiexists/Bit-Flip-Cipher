@@ -1,6 +1,6 @@
 # Bit Flip Cipher
 
-Bit Flip Cipher is a simple encryption tool that encrypts text using a key-derived SHA-256 hash with XOR bit flipping and gives a Base64 output. Since this is a symmetric cipher, decryption is performed using the same key that was used for encryption.
+Bit Flip Cipher is a simple cryptography tool that encrypts text using a key-derived SHA-256 hash with XOR bit flipping and gives a Base64 output. Since this is a symmetric cipher, decryption is performed using the same key that was used for encryption.
 This tool was created as a fun project for me to learn more about C and Linux.
 
 **Latest Version**: 1.1.0
