@@ -81,4 +81,4 @@ This implementation was created by me, [noinoiexists](https\://github.com/noinoi
 
 ## Licence
 
-This project is protected under the GNU Affero General Public Licence v3 (2007). You can learn more about it in the [LICENCE](https://github.com/noinoiexists/Bit-Flip-Cipher/blob/main/LICENSE) file.
+This project is protected under the MIT Licence. You can learn more about it in the [LICENCE](https://github.com/noinoiexists/Bit-Flip-Cipher/blob/main/LICENSE) file.
