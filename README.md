@@ -5,6 +5,9 @@ This tool was created as a fun project.
 
 **Latest Version**: 1.1.0
 
+## Disclaimer
+This cipher was created for educational purposes and is definitely **not** secure.
+
 ## How the Cipher Works  
 
 ### Encryption
