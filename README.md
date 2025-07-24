@@ -78,10 +78,6 @@ Options:
 ```
 
 
-## Credits
-
-This implementation was created by me, [noinoiexists](https\://github.com/noinoiexists). Kindly credit me if you use it anywhere or modify this code.
-
 ## Licence
 
-This project is protected under the MIT Licence. You can learn more about it in the [LICENCE](https://github.com/noinoiexists/Bit-Flip-Cipher/blob/main/LICENSE) file.
+This implementation was created by me, [noinoiexists](https://github.com/noinoiexists) and is protected under the MIT Licence. You can learn more about it in the [LICENCE](https://github.com/noinoiexists/Bit-Flip-Cipher/blob/main/LICENSE) file.
