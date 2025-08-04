@@ -1,7 +1,8 @@
 # Bit Flip Cipher
 
 Bit Flip Cipher is a simple cryptography tool that encrypts text using a key-derived SHA-256 hash with XOR bit flipping and gives a Base64 output. Since this is a symmetric cipher, decryption is performed using the same key that was used for encryption.
-This tool was created as a fun project.
+
+**Note:** This project was made by me prior to any study of cryptography, hence the naive and unspecific name. While it may seem similar to [Vigenere](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher) cipher, it is coincidental as I had no knowledge of it then.
 
 **Latest Version**: 1.1.0
 
@@ -80,4 +81,4 @@ Options:
 
 ## Licence
 
-This implementation was created by me, [noinoiexists](https://github.com/noinoiexists) and is protected under the MIT Licence. You can learn more about it in the [LICENCE](https://github.com/noinoiexists/Bit-Flip-Cipher/blob/main/LICENSE) file.
+This implementation was created by me, [Nithik R](https://github.com/noinoiexists) and is protected under the MIT Licence. You can learn more about it in the [LICENCE](https://github.com/noinoiexists/Bit-Flip-Cipher/blob/main/LICENSE) file.
